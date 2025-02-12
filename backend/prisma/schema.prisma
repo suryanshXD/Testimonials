@@ -37,6 +37,6 @@ model Testimonial {
   name String
   email String
   description String
-  testimonial_id String
-  testimonial Space @relation(fields: [testimonial_id] , references: [space_id])
+  testimonial_id String?
+  testimonial  Space? @relation(fields: [testimonial_id] , references: [space_id])
 }

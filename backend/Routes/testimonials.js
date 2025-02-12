@@ -13,7 +13,6 @@ testimonialRoute.post("/create", async (req, res) => {
         name: body.name,
         email: body.email,
         description: body.description,
-        testimonial_id: body.testimonial_id,
       },
     });
 
@@ -25,20 +24,11 @@ testimonialRoute.post("/create", async (req, res) => {
 
 testimonialRoute.get("/:space_id", async (req, res) => {
   try {
-    const space = await prisma.space.findFirst({
-      where: {
-        space_id: req.params.space_id,
-      },
-    });
-    if (!space) {
-      return res.json({
-        message: "Space not found",
-      });
-    }
+    const id = req.params.space_id;
 
-    const testimonials = await prisma.testimonial.findMany({
+    const space_testimonials = await prisma.testimonial.findMany({
       where: {
-        testimonial_id: space.space_id,
+        testimonial_id: id,
       },
       select: {
         name: true,
@@ -46,7 +36,7 @@ testimonialRoute.get("/:space_id", async (req, res) => {
         description: true,
       },
     });
-    return res.json({ testimonials });
+    return res.json({ space_testimonials });
   } catch (error) {
     console.log(error);
   }

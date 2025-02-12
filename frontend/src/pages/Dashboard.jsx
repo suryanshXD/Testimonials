@@ -2,33 +2,18 @@ import { Link } from "react-router-dom";
 import { FolderLogo } from "../components/FolderLogo";
 import { useState } from "react";
 import { CreateSpaceModel } from "../components/CreateSpaceModal";
+import { AuthHeader } from "../components/AuthHeader";
+import { SpaceCard } from "../components/SpaceCard";
+import { userSpaces } from "../hooks/Hooks";
 
 export const Dashboard = () => {
+  const { spaces } = userSpaces();
   const [showModal, setShowModal] = useState(false);
-
   return (
     <>
       <div>
-        <div className="h-screen bg-zinc-900">
-          <header>
-            <div className="flex flex-row justify-between py-6 shadow-xl ">
-              <div>
-                <div className="pl-16 flex flex-row">
-                  <div className="size-10">
-                    <img src="https://cdn.prod.website-files.com/5e9dc792e1210c5325f7ebbc/63fb43f256c0701578ad0b27_just-logo.svg" />
-                  </div>
-                  <div className="font-bold text-2xl pt-0.5 text-white">
-                    Testimonials
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="rounded-full bg-white px-4.5 py-2 mr-12 text-lg">
-                  S
-                </div>
-              </div>
-            </div>
-          </header>
+        <div className="bg-zinc-900 min-h-screen">
+          <AuthHeader />
           <div>
             <div>
               <div className="text-white text-3xl font-semibold ml-60 mt-10 mb-1.5">
@@ -56,6 +41,19 @@ export const Dashboard = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="text-white text-3xl font-bold mt-30 ml-36">
+            Overview
+          </div>
+          <div className="grid grid-cols-3 ml-20 pb-20">
+            {spaces.map((space) => (
+              <SpaceCard
+                space_id={space.space_id}
+                name={space.name}
+                description={space.description}
+                url={space.url}
+              />
+            ))}
           </div>
         </div>
       </div>
