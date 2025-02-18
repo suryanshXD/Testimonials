@@ -1,3 +1,5 @@
+import { UserRound } from "lucide-react";
+
 export const AuthHeader = () => {
   return (
     <>
@@ -14,8 +16,8 @@ export const AuthHeader = () => {
             </div>
           </div>
           <div>
-            <div className="rounded-full bg-white px-4.5 py-2 mr-12 text-lg">
-              S
+            <div className="rounded-full bg-white p-2.5 mr-12 text-lg cursor-pointer">
+              <UserRound />
             </div>
           </div>
         </div>

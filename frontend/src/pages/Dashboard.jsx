@@ -9,6 +9,7 @@ import { userSpaces } from "../hooks/Hooks";
 export const Dashboard = () => {
   const { spaces } = userSpaces();
   const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <div>

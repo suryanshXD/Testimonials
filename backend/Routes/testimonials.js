@@ -8,11 +8,22 @@ const prisma = new PrismaClient().$extends(withAccelerate());
 testimonialRoute.post("/create", async (req, res) => {
   try {
     const body = req.body;
-    await prisma.testimonial.create({
+    const space = await prisma.space.findUnique({
+      where: {
+        slug: body.slug,
+      },
+    });
+
+    if (!space) {
+      return res.status(404).json({ message: "Space not found" });
+    }
+
+    await prisma.testimonial.createMany({
       data: {
         name: body.name,
         email: body.email,
         description: body.description,
+        testimonial_id: space.space_id,
       },
     });
 
@@ -31,6 +42,7 @@ testimonialRoute.get("/:space_id", async (req, res) => {
         testimonial_id: id,
       },
       select: {
+        id: true,
         name: true,
         email: true,
         description: true,
@@ -40,4 +52,20 @@ testimonialRoute.get("/:space_id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+testimonialRoute.get("/unique/:id", async (req, res) => {
+  const id = req.params.id;
+  const testimonial = await prisma.testimonial.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      description: true,
+    },
+  });
+  return res.json({ testimonial });
 });

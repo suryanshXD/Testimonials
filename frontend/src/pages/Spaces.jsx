@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-//import { TestimonialCard } from "../components/TestimonialCard";
+import { TestimonialCard } from "../components/TestimonialCard";
 import { spacesTestimonials } from "../hooks/Hooks";
 
 export const Spaces = () => {
@@ -8,32 +8,20 @@ export const Spaces = () => {
   const { testimonial } = spacesTestimonials({ space_id });
   return (
     <>
-      <div>
-        <div>
-          {testimonial.map((Testimonials) => {
+      <div className="min-h-screen bg-zinc-900 pt-10 pl-20">
+        <div className="text-white text-4xl font-semibold mb-10">
+          Customers Testimonials
+        </div>
+        <div className="grid grid-cols-2">
+          {testimonial.map((Testimonials) => (
             <TestimonialCard
               name={Testimonials.name}
               email={Testimonials.email}
               description={Testimonials.description}
-            />;
-          })}
-        </div>
-      </div>
-    </>
-  );
-};
-
-const TestimonialCard = ({ name, email, description }) => {
-  return (
-    <>
-      <div>
-        <h1>Hii testi</h1>
-        <div>
-          <div className="text-red-800 text-lg">
-            <div>{name}</div>
-            <div>{email}</div>
-            <div>{description}</div>
-          </div>
+              testimonial_id={Testimonials.testimonial_id}
+              id={Testimonials.id}
+            />
+          ))}
         </div>
       </div>
     </>

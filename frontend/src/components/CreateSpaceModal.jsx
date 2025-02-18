@@ -7,7 +7,6 @@ export const CreateSpaceModel = ({ onClose }) => {
     name: "",
     description: "",
   });
-  const [url, setUrl] = useState("");
 
   const sendRequest = async () => {
     try {
@@ -20,7 +19,6 @@ export const CreateSpaceModel = ({ onClose }) => {
           },
         }
       );
-      setUrl(response.data.url);
       onClose();
     } catch (error) {
       console.error("Error creating space:", error);

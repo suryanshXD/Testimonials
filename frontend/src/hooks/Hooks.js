@@ -6,15 +6,17 @@ export const userSpaces = () => {
   const [spaces, setSpaces] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/v1/space/bulk`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        setSpaces(response.data.user_space);
-      });
+    setInterval(() => {
+      axios
+        .get(`http://localhost:3000/api/v1/space/bulk`, {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          setSpaces(response.data.user_space);
+        });
+    }, 500);
   }, []);
   return {
     spaces,
@@ -29,9 +31,8 @@ export const spacesTestimonials = ({ space_id }) => {
       .get(`http://localhost:3000/api/v1/testimonial/${space_id}`)
       .then((response) => {
         setTestimonial(response.data.space_testimonials);
-        console.log(testimonial);
       });
-  }, []);
+  }, [space_id]);
 
   return {
     testimonial,
