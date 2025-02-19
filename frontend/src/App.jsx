@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Signup } from "./pages/signup";
-import { Signin } from "./pages/signin";
 import { Dashboard } from "./pages/Dashboard";
 import { Spaces } from "./pages/Spaces";
 import { Testimonial } from "./pages/Testimonial";
 import { Home } from "./pages/Home";
 import { SpecificTestimonial } from "./pages/SpecificTestimonial";
+import { Signin } from "./pages/Signin";
+import { Signup } from "./pages/Signup";
 
 function App() {
   return (

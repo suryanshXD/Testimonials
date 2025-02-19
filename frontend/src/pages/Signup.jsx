@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 export const Signup = () => {
   const [postInupt, setPostInput] = useState({
     name: "",
