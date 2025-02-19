@@ -16,7 +16,7 @@ export const TestimonialCard = ({ name, email, description, id }) => {
   };
 
   const copyText = async () => {
-    const iframe = `<iframe src='http://localhost:5173/testimonial/${testiomialId}' width="45%" height="100%" frameborder="0" scrolling="no"></iframe>`;
+    const iframe = `<iframe src='https://testimonials-silk.vercel.app/testimonial/${testiomialId}' width="45%" height="100%" frameborder="0" scrolling="no"></iframe>`;
     await navigator.clipboard.writeText(iframe);
     toast("<iframe> copied", {
       position: "top-right",
@@ -69,7 +69,7 @@ export const TestimonialCard = ({ name, email, description, id }) => {
                 className="mt-8 bg-zinc-300 mb-2 pt-6 pb-1 pl-3 pr-1.5 underline underline-offset-3 mx-6 text-stone-700  ring-1 ring-zinc-500"
               >
                 &lt;iframe src=
-                {`http://localhost:5173/testimonial/${testiomialId}`}{" "}
+                {`https://testimonials-silk.vercel.app/testimonial/${testiomialId}`}{" "}
                 width="45%" height="100%" frameborder="0" scrolling="no"
                 &gt;&lt;/iframe&gt;
                 <div className="flex justify-end mt-2">
