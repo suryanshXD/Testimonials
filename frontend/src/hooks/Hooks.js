@@ -2,13 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+const backend_url = import.meta.env.VITE_REACT_API_URL;
+
 export const userSpaces = () => {
   const [spaces, setSpaces] = useState([]);
 
   useEffect(() => {
     setInterval(() => {
       axios
-        .get(`http://localhost:3000/api/v1/space/bulk`, {
+        .get(`${backend_url}/api/v1/space/bulk`, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },
@@ -16,7 +18,7 @@ export const userSpaces = () => {
         .then((response) => {
           setSpaces(response.data.user_space);
         });
-    }, 500);
+    }, 1000);
   }, []);
   return {
     spaces,
@@ -28,7 +30,7 @@ export const spacesTestimonials = ({ space_id }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/v1/testimonial/${space_id}`)
+      .get(`${backend_url}/api/v1/testimonial/${space_id}`)
       .then((response) => {
         setTestimonial(response.data.space_testimonials);
       });

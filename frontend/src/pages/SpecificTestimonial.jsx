@@ -6,9 +6,11 @@ export const SpecificTestimonial = () => {
   const { id } = useParams();
   const [testimonial, setTestimonial] = useState([]);
 
+  const backend_url = import.meta.env.VITE_REACT_API_URL;
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/v1/testimonial/unique/${id}`)
+      .get(`${backend_url}/api/v1/testimonial/unique/${id}`)
       .then((response) => {
         setTestimonial(response.data.testimonial);
       });

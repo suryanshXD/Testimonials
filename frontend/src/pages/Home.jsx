@@ -11,7 +11,7 @@ export const Home = () => {
         <Header />
         <div>
           <div className="flex flex-col items-center">
-            <div className="text-neutral-100 font-medium text-5xl mt-24 mb-14">
+            <div className="text-neutral-100 font-medium text-5xl mt-10 mb-10">
               Get testimonials from your customers with ease
             </div>
             <div className="flex flex-col items-center">
@@ -24,11 +24,11 @@ export const Home = () => {
                 website hosting.
               </div>
             </div>
-            <div className="w-2xl mt-16 ring-1 ring-white shadow-2xl shadow-neutral-200 mb-20">
+            <div className="w-2xl mt-10 ring-1 ring-neutral-400 shadow-2xl shadow-neutral-200 mb-20">
               <img src={img1} />
             </div>
           </div>
-          <div className="text-white text-4xl flex justify-center mt-30 mb-12">
+          <div className="text-white text-4xl flex justify-center mt-25 mb-12">
             Get and see Testimonials from your customer and Embed them
           </div>
           <div className="flex flex-row justify-around  mb-40">

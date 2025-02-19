@@ -5,7 +5,7 @@ import axios from "axios";
 
 export const SpaceCard = ({ space_id, name, description, url }) => {
   return (
-    <div className="bg-zinc-800 w-full sm:w-80 md:w-96 lg:w-[400px] mx-auto mt-5 p-5 rounded-2xl shadow-lg">
+    <div className="bg-zinc-800 w-full sm:w-80 md:w-96 lg:w-[400px] mx-auto mt-5 p-5 rounded-2xl ring-1 ring-white">
       <Link to={`/space/${space_id}`}>
         <div className="text-white text-2xl font-semibold cursor-pointer hover:underline">
           {name}
@@ -45,8 +45,10 @@ const copyUrl = async (url) => {
   });
 };
 
+const backend_url = import.meta.env.VITE_REACT_API_URL;
+
 const deleteSpace = async (space_id) => {
-  await axios.delete(`http://localhost:3000/api/v1/space/delete/${space_id}`, {
+  await axios.delete(`${backend_url}/api/v1/space/delete/${space_id}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },

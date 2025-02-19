@@ -9,10 +9,11 @@ export const Signup = () => {
   });
 
   const navigate = useNavigate();
+  const backend_url = import.meta.env.VITE_REACT_API_URL;
 
   async function sendRequest() {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/user/signup`,
+      `${backend_url}/api/v1/user/signup`,
       postInupt
     );
     const jwt = response.data;

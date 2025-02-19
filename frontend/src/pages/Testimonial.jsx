@@ -10,14 +10,16 @@ export const Testimonial = () => {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
 
+  const backend_url = import.meta.env.VITE_REACT_API_URL;
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/v1/space/${slug}`)
+      .get(`${backend_url}/api/v1/space/${slug}`)
       .then((response) => setSpace(response.data));
   }, [slug]);
 
   const sendRequest = async () => {
-    await axios.post(`http://localhost:3000/api/v1/testimonial/create`, {
+    await axios.post(`${backend_url}/api/v1/testimonial/create`, {
       slug: space.slug,
       name,
       email,

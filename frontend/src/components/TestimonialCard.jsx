@@ -1,6 +1,5 @@
 import { CodeXml, Copy, X } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
-import { IdContext } from "../context/idcontext";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -33,7 +32,7 @@ export const TestimonialCard = ({ name, email, description, id }) => {
   return (
     <>
       <div className="mt-8 ml-10 ">
-        <div className="text-white bg-zinc-800 w-lg text-lg pb-5 pt-8 border border-neutral-200 mr-96 pl-20 hover hover:bg-zinc-700">
+        <div className="text-white bg-zinc-800 w-lg text-lg pb-5 pt-8 border border-neutral-200 mr-96 pl-20 hover hover:bg-zinc-700 rounded-md">
           <div className="text-xl font-medium">{description}</div>
           <div className="flex flex-row justify-items-center gap-8 mt-5">
             <div className="text-sm mb-1">{name}</div>
@@ -70,7 +69,7 @@ export const TestimonialCard = ({ name, email, description, id }) => {
                 className="mt-8 bg-zinc-300 mb-2 pt-6 pb-1 pl-3 pr-1.5 underline underline-offset-3 mx-6 text-stone-700  ring-1 ring-zinc-500"
               >
                 &lt;iframe src=
-                {`http://localhost:5173/testimonial/${testiomialId}`}
+                {`http://localhost:5173/testimonial/${testiomialId}`}{" "}
                 width="45%" height="100%" frameborder="0" scrolling="no"
                 &gt;&lt;/iframe&gt;
                 <div className="flex justify-end mt-2">

@@ -3,16 +3,16 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Signin = () => {
+  const backend_url = import.meta.env.VITE_REACT_API_URL;
   const [postInupt, setPostInput] = useState({
     username: "",
     password: "",
   });
-
   const navigate = useNavigate();
 
   const sendRequest = async () => {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/user/signin`,
+      `${backend_url}/api/v1/user/signin`,
       postInupt
     );
     const jwt = response.data;
