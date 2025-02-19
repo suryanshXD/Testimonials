@@ -15,7 +15,7 @@ spaceRoute.post("/create", auth_middleware, async (req, res) => {
         name: name,
         slug: slug,
         description: description,
-        url: `https://testimonials-silk.vercel.app/${slug}`,
+        url: `https://testimonials-hazel-eta.vercel.app/${slug}`,
         adminId: req.user,
       },
     });

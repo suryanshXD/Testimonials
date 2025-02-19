@@ -15,10 +15,10 @@ export const TestimonialCard = ({ name, email, description, id }) => {
     navigate(`/testimonail/${testiomialId}`, { replace: true });
   };
 
-  const url = `https://testimonials-silk.vercel.app/testimonial/${testiomialId}`;
+  const url = `https://testimonials-hazel-eta.vercel.app/testimonial/${testiomialId}`;
 
   const copyText = async () => {
-    const iframe = `<iframe src='https://testimonials-silk.vercel.app/testimonial/${testiomialId}' width="45%" height="100%" frameborder="0" scrolling="no"></iframe>`;
+    const iframe = `<iframe src='https://testimonials-hazel-eta.vercel.app/testimonial/${testiomialId}' width="45%" height="100%" frameborder="0" scrolling="no"></iframe>`;
     await navigator.clipboard.writeText(iframe);
     toast("<iframe> copied", {
       position: "top-right",
