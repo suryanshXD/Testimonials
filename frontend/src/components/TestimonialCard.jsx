@@ -15,10 +15,8 @@ export const TestimonialCard = ({ name, email, description, id }) => {
     navigate(`/testimonail/${testiomialId}`, { replace: true });
   };
 
-  const url = `https://testimonials-hazel-eta.vercel.app/testimonial/${testiomialId}`;
-
   const copyText = async () => {
-    const iframe = `<iframe src='https://testimonials-hazel-eta.vercel.app/testimonial/${testiomialId}' width="45%" height="100%" frameborder="0" scrolling="no"></iframe>`;
+    const iframe = `<iframe src='https://testimonials-nk6z.onrender.com/testimonial/${testiomialId}' width="45%" height="100%" frameborder="0" scrolling="no"></iframe>`;
     await navigator.clipboard.writeText(iframe);
     toast("<iframe> copied", {
       position: "top-right",
@@ -66,12 +64,12 @@ export const TestimonialCard = ({ name, email, description, id }) => {
               >
                 <X size={22} />
               </button>
-              <p
+              <div
                 id="iframeText"
                 className="mt-8 bg-zinc-300 mb-2 pt-6 pb-1 pl-3 pr-1.5 underline underline-offset-3 mx-6 text-stone-700  ring-1 ring-zinc-500"
               >
                 &lt;iframe src=
-                'https://testimonials-hazel-eta.vercel.app/testimonial/$
+                'https://testimonials-nk6z.onrender.com/testimonial/$
                 {testiomialId}' width="45%" height="100%" frameborder="0"
                 scrolling="no" &gt;&lt;/iframe&gt;
                 <div className="flex justify-end mt-2">
@@ -79,7 +77,7 @@ export const TestimonialCard = ({ name, email, description, id }) => {
                     <Copy size={18} />
                   </button>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         </div>
