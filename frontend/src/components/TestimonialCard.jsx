@@ -151,7 +151,7 @@ export const TestimonialCard = ({ name, email, description, id }) => {
             <div className="bg-zinc-300 p-4 rounded-md text-sm text-gray-700 overflow-auto">
               &lt;iframe
               src='https://testimonials-hazel-eta.vercel.app/testimonial/
-              {testimonialId}' width="100%" height="300px" frameborder="0"
+              {testimonialId}' width="32%" height="300px" frameborder="0"
               scrolling="no" &gt;&lt;/iframe&gt;
               <div className="flex justify-end mt-2">
                 <button
