@@ -10,7 +10,7 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/v1/user", userRoute);
+//app.use("/api/v1/user", userRoute);
 app.use("/api/v1/space", spaceRoute);
 app.use("/api/v1/testimonial", testimonialRoute);
 app.listen(3000);
