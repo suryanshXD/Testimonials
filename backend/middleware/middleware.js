@@ -1,20 +1,19 @@
 import jwt from "jsonwebtoken";
-const jwt_secret = process.env.JWT_SECRET;
 
-export const auth_middleware = (req, res, next) => {
-  const token = req.headers.authorization;
+const JWT_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY;
 
+export function authMiddleware(req, res, next) {
+  const token = req.headers["authorization"];
   if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Access Denied. No token provided." });
+    return res.status(401).json({ error: "Unauthorized" });
   }
 
-  try {
-    const verified = jwt.verify(token, jwt_secret);
-    req.user = verified.id;
-    next();
-  } catch (err) {
-    res.status(403).json({ message: "Invalid or expired token." });
+  const decoded = jwt.verify(token, JWT_PUBLIC_KEY);
+  if (!decoded || !decoded.sub) {
+    return res.status(401).json({ error: "Unauthorized" });
   }
-};
+
+  req.userId = decoded.sub;
+
+  next();
+}

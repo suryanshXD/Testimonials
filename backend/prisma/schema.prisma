@@ -9,35 +9,38 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model User { 
-  id String @id @default(uuid())
-  username String @unique 
-  password String 
-  name String?
-  spaces Space[]
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String?
+  password    String?
+  imageUrl    String?
+  clerkUserId String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Space       Space[]
 }
 
-model Space { 
-  space_id String @id @default(uuid())
-  name String @unique
-  slug String @unique
-  description String
-  url String 
-  adminId String
-  admin User @relation(fields: [adminId], references: [id])
+model Space {
+  space_id     String        @id @default(uuid())
+  name         String        @unique
+  slug         String        @unique
+  description  String
+  url          String
+  adminId      Int
+  admin        User          @relation(fields: [adminId], references: [id])
   testimonials Testimonial[]
 }
 
 model Testimonial {
-  id String @id @default(uuid())
-  name String
-  email String
-  description String
+  id             String  @id @default(uuid())
+  name           String
+  email          String
+  description    String
   testimonial_id String?
-  testimonial  Space? @relation(fields: [testimonial_id] , references: [space_id])
+  testimonial    Space?  @relation(fields: [testimonial_id], references: [space_id])
 }

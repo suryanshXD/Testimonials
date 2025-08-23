@@ -8,9 +8,13 @@ const prisma = new PrismaClient().$extends(withAccelerate());
 
 spaceRoute.post("/create", auth_middleware, async (req, res) => {
   try {
+    const userId = req.body;
     const { name, description } = req.body;
     const slug = name.toLowerCase().replace(/\s+/g, "-");
     const createdSpace = await prisma.space.create({
+      where: {
+        adminId: userId,
+      },
       data: {
         name: name,
         slug: slug,
@@ -28,10 +32,10 @@ spaceRoute.post("/create", auth_middleware, async (req, res) => {
 
 spaceRoute.get("/bulk", auth_middleware, async (req, res) => {
   try {
-    const user_id = req.user;
+    const userId = req.user;
     const user_space = await prisma.space.findMany({
       where: {
-        adminId: user_id,
+        adminId: userId,
       },
       select: {
         space_id: true,
