@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  name          String?
+  password      String?
+  imageUrl      String?
+  clerkUserId   String          @unique
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  spaces        Space[]
+  FavoriteText  FavoriteText[]
+  FavoriteVideo FavoriteVideo[]
+}
+
+model Space {
+  space_id          String             @id @default(uuid())
+  name              String             @unique
+  slug              String             @unique
+  description       String
+  url               String
+  adminId           Int
+  admin             User               @relation(fields: [adminId], references: [id])
+  textTestimonials  TextTestimonial[]
+  videoTestimonials VideoTestimonial[]
+}
+
+model TextTestimonial {
+  id              String         @id @default(cuid())
+  content         String
+  name            String?
+  email           String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  testimonial_id  String?
+  textTestimonial Space?         @relation(fields: [testimonial_id], references: [space_id])
+  FavoriteText    FavoriteText[]
+}
+
+model VideoTestimonial {
+  id               String          @id @default(cuid())
+  videoUrl         String
+  name             String?
+  email            String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  testimonial_id   String?
+  videoTestimonial Space?          @relation(fields: [testimonial_id], references: [space_id])
+  FavoriteVideo    FavoriteVideo[]
+}
+
+model FavoriteText {
+  id            String          @id @default(cuid())
+  userId        Int
+  user          User            @relation(fields: [userId], references: [id])
+  testimonialId String
+  testimonial   TextTestimonial @relation(fields: [testimonialId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, testimonialId])
+}
+
+model FavoriteVideo {
+  id            String           @id @default(cuid())
+  userId        Int
+  user          User             @relation(fields: [userId], references: [id])
+  testimonialId String
+  testimonial   VideoTestimonial @relation(fields: [testimonialId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, testimonialId])
+}
