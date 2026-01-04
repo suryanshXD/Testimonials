@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { generateString } from "../utils/generateString";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface spaceProps {
   space_id: string;
@@ -81,7 +82,7 @@ export default function Page() {
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-")}-${generateString()}`;
 
-    const url = `http://localhost:3000/testimonial/${slug}`;
+    const url = `${window.location.origin}/testimonial/${slug}`;
 
     async function handleCreateSpace() {
       if (!name.trim() || !description.trim()) {
@@ -121,18 +122,28 @@ export default function Page() {
     }
 
     return (
-      <div className="fixed inset-0 bg-neutral-50 bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-xl md:rounded-2xl shadow-xl w-full max-w-sm sm:max-w-md mx-auto p-4 sm:p-6 md:p-8">
-          <div className="flex justify-between items-center mb-4 sm:mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-white/10 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          className="glass-effect rounded-2xl shadow-2xl w-full max-w-md mx-auto p-6"
+        >
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Create New Space
             </h2>
             <button
               onClick={() => setModal(false)}
-              className="text-gray-400 hover:text-gray-600 transition duration-300 p-1"
+              className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-white/30 transition duration-300"
             >
               <svg
-                className="w-5 h-5 sm:w-6 sm:h-6"
+                className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -147,21 +158,21 @@ export default function Page() {
             </button>
           </div>
 
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Space Name <span className="text-red-500">*</span>
               </label>
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter space name"
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Description <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -169,14 +180,14 @@ export default function Page() {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe your space"
                 rows={3}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm resize-none"
               />
             </div>
 
-            <div className="bg-blue-50 p-3 sm:p-4 rounded-lg">
-              <div className="flex items-start gap-2 sm:gap-3">
+            <div className="bg-gradient-to-r from-blue-50/50 to-purple-50/50 p-4 rounded-xl border border-white/30">
+              <div className="flex items-start gap-3">
                 <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 mt-0.5 flex-shrink-0"
+                  className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -188,24 +199,22 @@ export default function Page() {
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <div>
-                  <p className="text-xs sm:text-sm text-blue-800">
-                    Your space URL will be generated automatically based on the
-                    name you provide.
-                  </p>
-                </div>
+                <p className="text-sm text-gray-700">
+                  Your space URL will be generated automatically based on the
+                  name you provide.
+                </p>
               </div>
             </div>
 
             <button
               onClick={handleCreateSpace}
               disabled={isCreating}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm sm:text-base py-2.5 sm:py-3 px-4 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
             >
               {isCreating ? (
                 <>
                   <svg
-                    className="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white"
+                    className="animate-spin h-5 w-5 text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -224,15 +233,15 @@ export default function Page() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  <span className="text-xs sm:text-sm">Creating...</span>
+                  <span>Creating...</span>
                 </>
               ) : (
                 "Create Space"
               )}
             </button>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     );
   }
 
@@ -247,31 +256,37 @@ export default function Page() {
     };
 
     const handleDelete = async () => {
+      if (!confirm("Are you sure you want to delete this space?")) return;
       setIsDeleting(true);
       await handleDeleteSpace(space_id);
       setIsDeleting(false);
     };
 
     return (
-      <div className="bg-white rounded-lg sm:rounded-xl shadow-md sm:shadow-lg hover:shadow-lg sm:hover:shadow-xl transition-all duration-300 overflow-hidden">
-        <div className="p-4 sm:p-6">
-          {/* Header with space name and actions */}
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-0 mb-3 sm:mb-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -5, scale: 1.02 }}
+        className="bg-white/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-white/20"
+      >
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex justify-between items-start mb-4">
             <Link href={`space/${space_id}`} className="group">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-800 group-hover:text-blue-600 transition duration-300 line-clamp-1">
+              <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition duration-300 line-clamp-1">
                 {name}
               </h3>
             </Link>
-            <div className="flex justify-end gap-2">
-              {/* Copy Button - Icon Only */}
-              <button
+            <div className="flex gap-2">
+              <motion.button
+                whileTap={{ scale: 0.95 }}
                 onClick={copyToClipboard}
-                className="flex items-center justify-center px-2 sm:px-2.5 py-1.5 text-xs sm:text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition duration-300"
+                className="p-2 rounded-lg bg-white/50 backdrop-blur-sm hover:bg-white/70 transition duration-300"
                 title={copied ? "Copied!" : "Copy URL"}
               >
                 {copied ? (
                   <svg
-                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600"
+                    className="w-4 h-4 text-green-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -285,7 +300,7 @@ export default function Page() {
                   </svg>
                 ) : (
                   <svg
-                    className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                    className="w-4 h-4 text-gray-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -298,18 +313,18 @@ export default function Page() {
                     />
                   </svg>
                 )}
-              </button>
+              </motion.button>
 
-              {/* Delete Button - Icon Only */}
-              <button
+              <motion.button
+                whileTap={{ scale: 0.95 }}
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="flex items-center justify-center px-2 sm:px-2.5 py-1.5 text-xs sm:text-sm bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2 rounded-lg bg-red-50/50 backdrop-blur-sm hover:bg-red-100/50 transition duration-300 disabled:opacity-50"
                 title="Delete space"
               >
                 {isDeleting ? (
                   <svg
-                    className="animate-spin h-3.5 w-3.5 sm:h-4 sm:w-4"
+                    className="animate-spin h-4 w-4 text-red-600"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -330,7 +345,7 @@ export default function Page() {
                   </svg>
                 ) : (
                   <svg
-                    className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                    className="w-4 h-4 text-red-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -343,22 +358,22 @@ export default function Page() {
                     />
                   </svg>
                 )}
-              </button>
+              </motion.button>
             </div>
           </div>
 
-          <p className="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6 line-clamp-2">
-            {description}
-          </p>
+          <p className="text-gray-600 mb-6 line-clamp-2">{description}</p>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-3 sm:pt-4 border-t border-gray-100 gap-3 sm:gap-0">
+          <div className="flex items-center justify-between pt-4 border-t border-white/30">
             <Link
               href={`space/${space_id}`}
-              className="text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 transition duration-300 py-2 sm:py-0"
+              className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2 transition duration-300 group"
             >
               <span>View Space</span>
-              <svg
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+              <motion.svg
+                className="w-4 h-4"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -369,16 +384,16 @@ export default function Page() {
                   strokeWidth="2"
                   d="M14 5l7 7m0 0l-7 7m7-7H3"
                 />
-              </svg>
+              </motion.svg>
             </Link>
 
             <Link
               href={`/testimonial/${slug}`}
               target="_blank"
-              className="text-gray-500 hover:text-gray-700 text-xs sm:text-sm flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 transition duration-300 py-2 sm:py-0"
+              className="text-gray-500 hover:text-gray-700 text-sm flex items-center gap-2 transition duration-300"
             >
               <svg
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                className="w-4 h-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -390,11 +405,11 @@ export default function Page() {
                   d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                 />
               </svg>
-              <span>Testimonial Page</span>
+              <span>Preview</span>
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -403,47 +418,74 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-8 sm:py-12 px-3 sm:px-4 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-300/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-300/20 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-12 px-2">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">
-            Your Spaces
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Your{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Spaces
+            </span>
           </h1>
-          <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Create and manage spaces to collect testimonials from your clients
           </p>
-        </div>
+        </motion.div>
 
         {/* Create Space Button */}
-        <div className="flex justify-center mb-6 sm:mb-8 md:mb-10">
-          <button
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex justify-center mb-12"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleModal}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm sm:text-base py-2.5 sm:py-3 px-4 sm:px-6 md:px-8 rounded-lg transition duration-300 flex items-center gap-1.5 sm:gap-2 shadow-lg hover:shadow-xl w-full sm:w-auto justify-center"
+            className="glass-effect border border-white/30 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
           >
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            <span>Create New Space</span>
-          </button>
-        </div>
+            <div className="flex items-center gap-3 px-8 py-4">
+              <svg
+                className="w-6 h-6 text-purple-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <span className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Create New Space
+              </span>
+            </div>
+          </motion.button>
+        </motion.div>
 
         {/* Loading State */}
         {loading && (
-          <div className="flex justify-center items-center py-12 sm:py-16 md:py-20">
-            <div className="flex flex-col items-center gap-3 sm:gap-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center items-center py-20"
+          >
+            <div className="flex flex-col items-center gap-4">
               <svg
-                className="animate-spin h-8 w-8 sm:h-10 sm:w-10 text-blue-600"
+                className="animate-spin h-12 w-12 text-purple-600"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -462,19 +504,21 @@ export default function Page() {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>
               </svg>
-              <p className="text-gray-600 text-sm sm:text-base">
-                Loading your spaces...
-              </p>
+              <p className="text-gray-600">Loading your spaces...</p>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Empty State */}
         {!loading && spaces.length === 0 && (
-          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-6 sm:p-8 md:p-12 text-center mx-2 sm:mx-0">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass-effect rounded-2xl shadow-xl p-12 text-center max-w-2xl mx-auto border border-white/20"
+          >
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg
-                className="w-8 h-8 sm:w-10 sm:h-10 text-gray-400"
+                className="w-12 h-12 text-purple-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -487,19 +531,21 @@ export default function Page() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
               No Spaces Yet
             </h3>
-            <p className="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6 max-w-md mx-auto">
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
               Create your first space to start collecting testimonials from your
               clients and customers.
             </p>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleModal}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm sm:text-base py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition duration-300 inline-flex items-center gap-1.5 sm:gap-2"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
             >
               <svg
-                className="w-4 h-4 sm:w-5 sm:h-5"
+                className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -512,85 +558,135 @@ export default function Page() {
                 />
               </svg>
               Create Your First Space
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         )}
 
         {/* Spaces Grid */}
         {!loading && spaces.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 px-2 sm:px-0">
-            {spaces.map((space) => (
-              <SpaceCard
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {spaces.map((space, index) => (
+              <motion.div
                 key={space.space_id}
-                name={space.name}
-                description={space.description}
-                space_id={space.space_id}
-                url={space.url}
-                slug={space.slug}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <SpaceCard
+                  name={space.name}
+                  description={space.description}
+                  space_id={space.space_id}
+                  url={space.url}
+                  slug={space.slug}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
 
         {/* Info Section */}
         {spaces.length > 0 && (
-          <div className="mt-8 sm:mt-10 md:mt-12 bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 mx-2 sm:mx-0">
-            <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
-              <div className="flex-shrink-0 mx-auto sm:mx-0">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mt-12 glass-effect rounded-2xl shadow-xl p-8 border border-white/20"
+          >
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
               </div>
-              <div className="w-full">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3 text-center sm:text-left">
+              <div>
+                <h3 className="text-xl font-bold text-gray-900">
                   How it works
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                  <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                    <div className="font-medium text-gray-700 text-sm sm:text-base mb-1">
-                      1. Create a Space
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-600">
-                      Each space represents a product, service, or event.
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                    <div className="font-medium text-gray-700 text-sm sm:text-base mb-1">
-                      2. Share the URL
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-600">
-                      Share your unique testimonial page link with clients.
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-                    <div className="font-medium text-gray-700 text-sm sm:text-base mb-1">
-                      3. Collect Testimonials
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-600">
-                      Clients can submit text or video testimonials.
-                    </p>
-                  </div>
-                </div>
+                <p className="text-gray-600">
+                  Follow these simple steps to collect testimonials
+                </p>
               </div>
             </div>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: "1. Create a Space",
+                  description:
+                    "Each space represents a product, service, or event.",
+                  icon: "M12 4v16m8-8H4",
+                  color: "from-blue-500 to-cyan-500",
+                },
+                {
+                  title: "2. Share the URL",
+                  description:
+                    "Share your unique testimonial page link with clients.",
+                  icon: "M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z",
+                  color: "from-purple-500 to-pink-500",
+                },
+                {
+                  title: "3. Collect Testimonials",
+                  description: "Clients can submit text or video testimonials.",
+                  icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z",
+                  color: "from-green-500 to-teal-500",
+                },
+              ].map((step, index) => (
+                <motion.div
+                  key={step.title}
+                  whileHover={{ y: -5 }}
+                  className="glass-effect rounded-xl p-6 border border-white/20"
+                >
+                  <div
+                    className={`w-10 h-10 bg-gradient-to-r ${step.color} rounded-lg flex items-center justify-center mb-4`}
+                  >
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d={step.icon}
+                      />
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    {step.title}
+                  </h4>
+                  <p className="text-sm text-gray-600">{step.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         )}
       </div>
 
       {/* Modal */}
-      {modal && <CreateSpace />}
+      <AnimatePresence>{modal && <CreateSpace />}</AnimatePresence>
+
+      <style jsx>{`
+        .glass-effect {
+          background: rgba(255, 255, 255, 0.7);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+      `}</style>
     </div>
   );
 }
