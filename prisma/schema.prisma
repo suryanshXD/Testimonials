@@ -14,75 +14,52 @@ datasource db {
 }
 
 model User {
-  id            Int             @id @default(autoincrement())
-  email         String          @unique
-  name          String?
-  password      String?
-  imageUrl      String?
-  clerkUserId   String          @unique
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  spaces        Space[]
-  FavoriteText  FavoriteText[]
-  FavoriteVideo FavoriteVideo[]
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String?
+  password    String?
+  imageUrl    String?
+  clerkUserId String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  spaces      Space[]
 }
 
 model Space {
-  space_id          String             @id @default(uuid())
-  name              String             @unique
-  slug              String             @unique
-  description       String
-  url               String
-  adminId           Int
-  admin             User               @relation(fields: [adminId], references: [id])
-  textTestimonials  TextTestimonial[]
-  videoTestimonials VideoTestimonial[]
+  space_id            String                @id @default(uuid())
+  name                String                @unique
+  slug                String                @unique
+  description         String
+  url                 String
+  adminId             String
+  admin               User?                 @relation(fields: [adminId], references: [clerkUserId])
+  testimonials        Testimonial[]
+  favoriteTestimonial FavoriteTestimonial[]
 }
 
-model TextTestimonial {
-  id              String         @id @default(cuid())
-  content         String
-  name            String?
-  email           String?
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  testimonial_id  String?
-  textTestimonial Space?         @relation(fields: [testimonial_id], references: [space_id])
-  FavoriteText    FavoriteText[]
+model Testimonial {
+  id                  String                @id @default(cuid())
+  name                String
+  email               String
+  content             String?
+  videoUrl            String?
+  type                TestimonialType
+  createdAt           DateTime              @default(now())
+  space_id            String
+  space               Space                 @relation(fields: [space_id], references: [space_id], onDelete: Cascade)
+  favoriteTestimonial FavoriteTestimonial[]
 }
 
-model VideoTestimonial {
-  id               String          @id @default(cuid())
-  videoUrl         String
-  name             String?
-  email            String?
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  testimonial_id   String?
-  videoTestimonial Space?          @relation(fields: [testimonial_id], references: [space_id])
-  FavoriteVideo    FavoriteVideo[]
+model FavoriteTestimonial {
+  id             String      @id @default(cuid())
+  testimonial_id String
+  Testimonials   Testimonial @relation(fields: [testimonial_id], references: [id], onDelete: Cascade)
+  space_id       String
+  space          Space       @relation(fields: [space_id], references: [space_id], onDelete: Cascade)
+  createdAt      DateTime    @default(now())
 }
 
-model FavoriteText {
-  id            String          @id @default(cuid())
-  userId        Int
-  user          User            @relation(fields: [userId], references: [id])
-  testimonialId String
-  testimonial   TextTestimonial @relation(fields: [testimonialId], references: [id])
-
-  createdAt DateTime @default(now())
-
-  @@unique([userId, testimonialId])
-}
-
-model FavoriteVideo {
-  id            String           @id @default(cuid())
-  userId        Int
-  user          User             @relation(fields: [userId], references: [id])
-  testimonialId String
-  testimonial   VideoTestimonial @relation(fields: [testimonialId], references: [id])
-
-  createdAt DateTime @default(now())
-
-  @@unique([userId, testimonialId])
+enum TestimonialType {
+  TEXT
+  VIDEO
 }
