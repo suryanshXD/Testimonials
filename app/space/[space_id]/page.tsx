@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Heart, HeartOff, Star, Copy } from "lucide-react";
+import { Heart, Star, Copy } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
 type Testimonial = {
@@ -120,13 +120,14 @@ export default function SpaceTestimonialsPage() {
 
   const handleCopyIframe = async (testimonialId: string) => {
     const iframeCode = `<iframe
-  src="http://localhost:3000/iframe/${testimonialId}"
+  src="${window.location.origin}/iframe/${testimonialId}"
   width="332px"
   height="320px"
   frameborder="0"
   scrolling="no"
   style="border: none; overflow: hidden;"
   title="Customer Testimonial"
+  allowfullscreen
 />`;
 
     try {
@@ -508,6 +509,7 @@ export default function SpaceTestimonialsPage() {
                           <video
                             src={t.videoUrl}
                             controls
+                            controlsList="nodownload"
                             className="absolute top-0 left-0 w-full h-full object-cover"
                           />
                         </div>
@@ -602,7 +604,7 @@ export default function SpaceTestimonialsPage() {
             <div className="space-y-4">
               <div className="bg-gray-900/80 rounded-xl p-4">
                 <code className="text-sm text-gray-300 font-mono">
-                  {`<iframe src="${window.location.origin}/iframe/{testimonial_id}" width="100%" height="400" frameborder="0" style="border-radius: 12px;" allowfullscreen></iframe>`}
+                  {`<iframe src="${window.location.origin}/iframe/{testimonial_id}" width="332px" height="320px" frameborder="0" style="border-radius: 12px;" allowfullscreen></iframe>`}
                 </code>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">

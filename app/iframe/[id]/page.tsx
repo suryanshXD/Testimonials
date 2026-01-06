@@ -62,7 +62,7 @@ export default function IframeTestimonialPage() {
   }
 
   return (
-    <div className="w-full h-full p-0 m-0">
+    <div className="">
       {/* Main testimonial card - Removed fixed width/height constraints */}
       <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden w-full h-full flex flex-col">
         {/* Header with decorative accent */}
@@ -104,12 +104,12 @@ export default function IframeTestimonialPage() {
         </div>
 
         {/* Content area */}
-        <div className="flex-1 px-4 pt-4 pb-2 overflow-hidden">
+        <div className="flex-1 px-4 pt-8 pb-3 overflow-hidden">
           {testimonial.type === "TEXT" && testimonial.content && (
             <div className="relative h-full">
               <div className="h-full overflow-y-auto">
                 <p className="text-gray-700 text-sm leading-relaxed italic">
-                  "{testimonial.content}"
+                  &quot;{testimonial.content}&quot;
                 </p>
               </div>
             </div>
@@ -121,7 +121,8 @@ export default function IframeTestimonialPage() {
                 <video
                   src={testimonial.videoUrl}
                   controls
-                  className="w-full h-auto max-h-[160px] object-cover rounded-lg"
+                  controlsList="nodownload"
+                  className="w-full h-auto max-h-[140px] object-cover rounded-lg"
                   preload="metadata"
                 />
               </div>

@@ -84,7 +84,7 @@ export default function Page() {
     const fileName = uuidv4() + ".mp4";
 
     // Upload file to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from("videos")
       .upload(fileName, videoFile);
 
