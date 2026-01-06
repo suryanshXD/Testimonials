@@ -305,7 +305,7 @@ export default function Page() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Enter your full name"
-                      className="w-full px-4 py-3 border border-white/30 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
                       required
                     />
                   </div>
@@ -320,7 +320,7 @@ export default function Page() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
-                      className="w-full px-4 py-3 border border-white/30 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
                       required
                     />
                   </div>
@@ -335,7 +335,7 @@ export default function Page() {
                       onChange={(e) => setContent(e.target.value)}
                       placeholder="Share your experience, what you liked, and any memorable moments..."
                       rows={6}
-                      className="w-full px-4 py-3 border border-white/30 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm resize-none"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm resize-none"
                       required
                     />
                   </div>
@@ -405,7 +405,7 @@ export default function Page() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Enter your full name"
-                      className="w-full px-4 py-3 border border-white/30 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
                       required
                     />
                   </div>
@@ -420,7 +420,7 @@ export default function Page() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
-                      className="w-full px-4 py-3 border border-white/30 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 bg-white/50 backdrop-blur-sm"
                       required
                     />
                   </div>
@@ -431,7 +431,7 @@ export default function Page() {
                     </label>
                     <motion.div
                       whileHover={{ scale: 1.01 }}
-                      className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-white/30 rounded-xl hover:border-purple-500 transition duration-300 cursor-pointer bg-white/30 backdrop-blur-sm"
+                      className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-200 rounded-xl hover:border-purple-500 transition duration-300 cursor-pointer bg-white/30 backdrop-blur-sm"
                       onClick={() =>
                         document.getElementById("video-upload")?.click()
                       }

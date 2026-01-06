@@ -17,7 +17,16 @@ export function AppBar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Check if we're on iframe routes (hide navbar completely)
+  const isIframePage = pathname?.startsWith("/iframe/");
+
+  // Check if we're on testimonial detail pages (show only logo)
   const isTestimonialDetailPage = pathname?.startsWith("/testimonial/");
+
+  // Return null if we're on iframe page (completely hide navbar)
+  if (isIframePage) {
+    return null;
+  }
 
   // Animation variants
   const containerVariants: Variants = {
@@ -58,7 +67,7 @@ export function AppBar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 sm:h-20 items-center justify-between">
-          {/* Logo */}
+          {/* Logo - Always show on all pages */}
           <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
               <motion.div
@@ -99,7 +108,7 @@ export function AppBar() {
             </Link>
           </motion.div>
 
-          {/* Only show the rest if NOT on testimonial detail page */}
+          {/* Only show navigation and auth section if NOT on testimonial detail page */}
           {!isTestimonialDetailPage && (
             <>
               {/* Navigation Links for Signed In Users */}
@@ -146,7 +155,7 @@ export function AppBar() {
                 </div>
               </SignedIn>
 
-              {/* Simplified Auth Section */}
+              {/* Auth Section */}
               <div className="flex items-center gap-3 sm:gap-4">
                 <SignedOut>
                   <div className="flex items-center gap-3">
@@ -252,7 +261,7 @@ export function AppBar() {
           )}
         </div>
 
-        {/* Mobile Navigation Menu */}
+        {/* Mobile Navigation Menu - Only show if NOT on testimonial detail page */}
         <AnimatePresence>
           {isMobileMenuOpen && !isTestimonialDetailPage && (
             <SignedIn>
